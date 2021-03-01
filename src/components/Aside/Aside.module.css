@@ -1,0 +1,21 @@
+@value noteBlack, noteGreen from '/src/common/colors.css';
+
+.aside {
+  width: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: noteBlack;
+}
+
+.logo {
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color ease-in 0.2s;
+}
+
+.logo:hover {
+  color: noteGreen;
+}
