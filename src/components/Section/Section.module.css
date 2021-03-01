@@ -1,0 +1,11 @@
+@value noteBlack, noteGrey from '/src/common/colors.css';
+
+.section {
+  margin: 1em;
+}
+
+.item {
+  padding: 1em;
+  background-color: white;
+  border-radius: 10px;
+}
