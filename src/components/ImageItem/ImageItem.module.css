@@ -1,0 +1,17 @@
+.figure {
+  display: flex;
+}
+
+.img {
+  margin: -1em;
+  margin-right: 1em;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  max-width: 70%;
+}
+
+.figcaption {
+  font-size: 1.5em;
+  display: block;
+  margin-bottom: 0.5em;
+}

@@ -5,6 +5,7 @@ import TaskItem from "../TaskItem/TaskItem";
 import styles from "./Section.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import ImageItem from "../ImageItem/ImageItem";
 
 type Props = {
   items: Record<ItemId, Item>;
@@ -15,7 +16,7 @@ const Section: React.FC<Props> = ({ items, toggleCheck }) => {
   const getItemComponent = (key: ItemId, item: Item) => {
     switch (item.type) {
       case "image":
-        return;
+        return <ImageItem title={item.title} url={item.url} />;
       case "video":
         return;
       case "note":

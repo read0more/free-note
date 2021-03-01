@@ -18,6 +18,11 @@ function App() {
       body: "태스크 바디",
       checked: true,
     },
+    id3: {
+      type: "image",
+      title: "이미지",
+      url: "https://picsum.photos/700/500",
+    },
   });
 
   const toggleCheck = (id: ItemId) => {
