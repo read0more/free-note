@@ -1,10 +1,11 @@
-@value noteBlack, noteGrey from '/src/common/colors.css';
+@value noteGreen from '/src/common/colors.css';
 
 .section {
   margin: 1em;
 }
 
 .item {
+  position: relative;
   padding: 1em;
   background-color: white;
   border-radius: 10px;
@@ -12,4 +13,12 @@
 
 .item:not(:last-child) {
   margin-bottom: 1em;
+}
+
+.delete {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  cursor: pointer;
+  color: orangered;
 }

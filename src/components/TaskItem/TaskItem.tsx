@@ -18,21 +18,20 @@ const TaskItem: React.FC<Props> = ({
   };
 
   return (
-    <article className={styles.article}>
+    <article>
       <b className={styles.title}>{title}</b>
       <span>
         <input
           type="checkbox"
-          id="body"
-          className={styles.body}
+          id="input"
+          className={styles.input}
           checked={checked}
           onChange={onChange}
         ></input>
-        <label htmlFor="body" className={styles.label}>
+        <label htmlFor="input" className={styles.label}>
           {body}
         </label>
       </span>
-      <span className={styles.delete}>❌</span>
     </article>
   );
 };

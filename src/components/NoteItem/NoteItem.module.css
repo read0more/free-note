@@ -1,18 +1,5 @@
-@value noteBlack, noteGrey from '/src/common/colors.css';
-
-.article {
-  position: relative;
-}
-
 .title {
   font-size: 1.5em;
   display: block;
   margin-bottom: 0.5em;
-}
-
-.delete {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  right: 0;
 }

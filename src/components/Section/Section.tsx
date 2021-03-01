@@ -3,6 +3,8 @@ import { Item, ItemId } from "../../common/types";
 import NoteItem from "../NoteItem/NoteItem";
 import TaskItem from "../TaskItem/TaskItem";
 import styles from "./Section.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   items: Record<ItemId, Item>;
@@ -37,6 +39,7 @@ const Section: React.FC<Props> = ({ items, toggleCheck }) => {
         {Object.keys(items).map((key) => (
           <li key={key} className={styles.item}>
             {getItemComponent(key, items[key])}
+            <FontAwesomeIcon icon={faTimes} className={styles.delete} />
           </li>
         ))}
       </ul>
