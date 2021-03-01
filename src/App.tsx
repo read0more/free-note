@@ -12,7 +12,13 @@ function App() {
       title: "타이트을",
       body: "바디이",
     },
+    {
+      type: "task",
+      title: "태스크",
+      body: "태스크 바디",
+    },
   ]);
+
   const SectionComponent = () => <Section items={items} />;
 
   return (

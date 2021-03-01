@@ -1,6 +1,7 @@
 import React from "react";
 import { Item } from "../../common/types";
 import NoteItem from "../NoteItem/NoteItem";
+import TaskItem from "../TaskItem/TaskItem";
 import styles from "./Section.module.css";
 
 type Props = {
@@ -17,7 +18,7 @@ const Section: React.FC<Props> = ({ items }) => {
       case "note":
         return <NoteItem title={item.title} body={item.body} />;
       case "task":
-        return;
+        return <TaskItem title={item.title} body={item.body} />;
     }
   };
 

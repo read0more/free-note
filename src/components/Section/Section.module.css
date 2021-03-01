@@ -9,3 +9,7 @@
   background-color: white;
   border-radius: 10px;
 }
+
+.item:not(:last-child) {
+  margin-bottom: 1em;
+}
