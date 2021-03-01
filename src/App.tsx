@@ -7,19 +7,35 @@ import Section from "./components/Section/Section";
 
 function App() {
   const [items, setItems] = useState<Record<ItemId, Item>>({
-    "1": {
+    id1: {
       type: "note",
       title: "타이트을",
       body: "바디이",
     },
-    "2": {
+    id2: {
       type: "task",
       title: "태스크",
       body: "태스크 바디",
+      checked: true,
     },
   });
 
-  const SectionComponent = () => <Section items={items} />;
+  const toggleCheck = (id: ItemId) => {
+    const target = items[id];
+
+    if (target.type !== "task") {
+      return;
+    }
+
+    setItems({
+      ...items,
+      [id]: { ...target, checked: !target.checked },
+    });
+  };
+
+  const SectionComponent = () => (
+    <Section items={items} toggleCheck={toggleCheck} />
+  );
 
   return (
     <div className={styles.app}>

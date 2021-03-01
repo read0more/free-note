@@ -16,3 +16,8 @@
   top: 0;
   right: 0;
 }
+
+.body,
+.label {
+  cursor: pointer;
+}

@@ -1,14 +1,40 @@
 import React from "react";
-import { Task } from "../../common/types";
+import { ItemId, Task } from "../../common/types";
 import styles from "./TaskItem.module.css";
 
-const TaskItem: React.FC<Omit<Task, "type">> = ({ title, body }) => (
-  <article className={styles.article}>
-    <b className={styles.title}>{title}</b>
-    <input type="checkbox" id="body"></input>
-    <label htmlFor="body">{body}</label>
-    <span className={styles.delete}>❌</span>
-  </article>
-);
+type Props = Omit<Task, "type"> & { toggleCheck: (id: ItemId) => void } & {
+  id: ItemId;
+};
+
+const TaskItem: React.FC<Props> = ({
+  id,
+  title,
+  body,
+  checked,
+  toggleCheck,
+}) => {
+  const onChange = () => {
+    toggleCheck(id);
+  };
+
+  return (
+    <article className={styles.article}>
+      <b className={styles.title}>{title}</b>
+      <span>
+        <input
+          type="checkbox"
+          id="body"
+          className={styles.body}
+          checked={checked}
+          onChange={onChange}
+        ></input>
+        <label htmlFor="body" className={styles.label}>
+          {body}
+        </label>
+      </span>
+      <span className={styles.delete}>❌</span>
+    </article>
+  );
+};
 
 export default TaskItem;

@@ -16,6 +16,7 @@ export type Note = {
 
 export type Task = Omit<Note, "type"> & {
   type: "task";
+  checked: boolean;
 };
 
 export type Item = Image | Video | Note | Task;

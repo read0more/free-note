@@ -6,11 +6,11 @@ import styles from "./Section.module.css";
 
 type Props = {
   items: Record<ItemId, Item>;
+  toggleCheck: (id: ItemId) => void;
 };
 
-const Section: React.FC<Props> = ({ items }) => {
-  const getItemComponent = (item: Item) => {
-    console.log(item);
+const Section: React.FC<Props> = ({ items, toggleCheck }) => {
+  const getItemComponent = (key: ItemId, item: Item) => {
     switch (item.type) {
       case "image":
         return;
@@ -19,7 +19,15 @@ const Section: React.FC<Props> = ({ items }) => {
       case "note":
         return <NoteItem title={item.title} body={item.body} />;
       case "task":
-        return <TaskItem title={item.title} body={item.body} />;
+        return (
+          <TaskItem
+            id={key}
+            title={item.title}
+            body={item.body}
+            checked={item.checked}
+            toggleCheck={toggleCheck}
+          />
+        );
     }
   };
 
@@ -27,7 +35,9 @@ const Section: React.FC<Props> = ({ items }) => {
     <section className={styles.section}>
       <ul>
         {Object.keys(items).map((key) => (
-          <li className={styles.item}>{getItemComponent(items[key])}</li>
+          <li key={key} className={styles.item}>
+            {getItemComponent(key, items[key])}
+          </li>
         ))}
       </ul>
     </section>
