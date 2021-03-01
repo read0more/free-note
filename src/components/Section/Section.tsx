@@ -1,15 +1,16 @@
 import React from "react";
-import { Item } from "../../common/types";
+import { Item, ItemId } from "../../common/types";
 import NoteItem from "../NoteItem/NoteItem";
 import TaskItem from "../TaskItem/TaskItem";
 import styles from "./Section.module.css";
 
 type Props = {
-  items: Item[];
+  items: Record<ItemId, Item>;
 };
 
 const Section: React.FC<Props> = ({ items }) => {
   const getItemComponent = (item: Item) => {
+    console.log(item);
     switch (item.type) {
       case "image":
         return;
@@ -25,8 +26,8 @@ const Section: React.FC<Props> = ({ items }) => {
   return (
     <section className={styles.section}>
       <ul>
-        {items.map((item) => (
-          <li className={styles.item}>{getItemComponent(item)}</li>
+        {Object.keys(items).map((key) => (
+          <li className={styles.item}>{getItemComponent(items[key])}</li>
         ))}
       </ul>
     </section>

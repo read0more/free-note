@@ -19,3 +19,4 @@ export type Task = Omit<Note, "type"> & {
 };
 
 export type Item = Image | Video | Note | Task;
+export type ItemId = string;
