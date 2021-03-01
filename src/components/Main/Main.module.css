@@ -1,0 +1,13 @@
+@value noteBlack, noteGrey from '/src/common/colors.css';
+
+.main {
+  background-color: noteGrey;
+  flex-grow: 1;
+}
+
+.title {
+  background-color: noteBlack;
+  color: white;
+  margin: 0;
+  padding: 0.5em 1em;
+}
