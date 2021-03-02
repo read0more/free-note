@@ -21,7 +21,12 @@ function App() {
     id3: {
       type: "image",
       title: "이미지",
-      url: "https://picsum.photos/700/500",
+      url: "https://picsum.photos/600/200",
+    },
+    id4: {
+      type: "video",
+      title: "동영상",
+      videoId: "QTwKr4_poRk",
     },
   });
 

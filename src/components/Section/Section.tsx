@@ -6,6 +6,7 @@ import styles from "./Section.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import ImageItem from "../ImageItem/ImageItem";
+import VideoItem from "../VideoItem/VideoItem";
 
 type Props = {
   items: Record<ItemId, Item>;
@@ -18,6 +19,7 @@ const Section: React.FC<Props> = ({ items, toggleCheck }) => {
       case "image":
         return <ImageItem title={item.title} url={item.url} />;
       case "video":
+        return <VideoItem title={item.title} videoId={item.videoId} />;
         return;
       case "note":
         return <NoteItem title={item.title} body={item.body} />;

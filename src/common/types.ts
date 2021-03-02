@@ -4,8 +4,10 @@ export type Image = {
   url: string;
 };
 
-export type Video = Omit<Image, "type"> & {
+export type Video = {
   type: "video";
+  title: string;
+  videoId: string;
 };
 
 export type Note = {

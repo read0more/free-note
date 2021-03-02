@@ -1,0 +1,16 @@
+.article {
+  display: flex;
+}
+
+.video {
+  width: 550px;
+  max-width: 70%;
+  height: 300px;
+  margin-right: 1em;
+}
+
+.title {
+  font-size: 1.5em;
+  display: block;
+  margin-bottom: 0.5em;
+}
