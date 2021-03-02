@@ -22,4 +22,5 @@ export type Task = Omit<Note, "type"> & {
 };
 
 export type Item = Image | Video | Note | Task;
+export type ItemType = Pick<Item, "type">[keyof Pick<Item, "type">];
 export type ItemId = string;

@@ -9,7 +9,7 @@ import ImageItem from "../ImageItem/ImageItem";
 import VideoItem from "../VideoItem/VideoItem";
 
 type Props = {
-  items: Record<ItemId, Item>;
+  items: Record<ItemId, Item> | undefined;
   toggleCheck: (id: ItemId) => void;
 };
 
@@ -38,12 +38,13 @@ const Section: React.FC<Props> = ({ items, toggleCheck }) => {
   return (
     <section className={styles.section}>
       <ul>
-        {Object.keys(items).map((key) => (
-          <li key={key} className={styles.item}>
-            {getItemComponent(key, items[key])}
-            <FontAwesomeIcon icon={faTimes} className={styles.delete} />
-          </li>
-        ))}
+        {items &&
+          Object.keys(items).map((key) => (
+            <li key={key} className={styles.item}>
+              {getItemComponent(key, items[key])}
+              <FontAwesomeIcon icon={faTimes} className={styles.delete} />
+            </li>
+          ))}
       </ul>
     </section>
   );

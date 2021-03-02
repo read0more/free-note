@@ -3,33 +3,17 @@ import styles from "./App.module.css";
 import { Item, ItemId } from "./common/types";
 import Aside from "./components/Aside/Aside";
 import Main from "./components/Main/Main";
+import Modal from "./components/Modal/Modal";
 
 function App() {
-  const [items, setItems] = useState<Record<ItemId, Item>>({
-    id1: {
-      type: "note",
-      title: "타이트을",
-      body: "바디이",
-    },
-    id2: {
-      type: "task",
-      title: "태스크",
-      body: "태스크 바디",
-      checked: true,
-    },
-    id3: {
-      type: "image",
-      title: "이미지",
-      url: "https://picsum.photos/600/200",
-    },
-    id4: {
-      type: "video",
-      title: "동영상",
-      videoId: "QTwKr4_poRk",
-    },
-  });
+  const [items, setItems] = useState<Record<ItemId, Item>>();
+  const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
 
   const toggleCheck = (id: ItemId) => {
+    if (!items) {
+      return;
+    }
+
     const target = items[id];
 
     if (target.type !== "task") {
@@ -42,10 +26,24 @@ function App() {
     });
   };
 
+  const addItem = (item: Item) => {
+    const id = Date.now();
+    setItems({ ...items, [id]: { ...item } });
+  };
+
+  const openModal = (content: JSX.Element) => {
+    setModalContent(content);
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
+  };
+
   return (
     <div className={styles.app}>
-      <Aside />
+      <Aside addItem={addItem} openModal={openModal} closeModal={closeModal} />
       <Main items={items} toggleCheck={toggleCheck} />
+      {modalContent && <Modal closeModal={closeModal}>{modalContent}</Modal>}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Section from "../Section/Section";
 import styles from "./Main.module.css";
 
 type Props = {
-  items: Record<ItemId, Item>;
+  items: Record<ItemId, Item> | undefined;
   toggleCheck: (id: ItemId) => void;
 };
 
