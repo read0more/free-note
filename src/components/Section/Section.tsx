@@ -20,7 +20,6 @@ const Section: React.FC<Props> = ({ items, toggleCheck }) => {
         return <ImageItem title={item.title} url={item.url} />;
       case "video":
         return <VideoItem title={item.title} videoId={item.videoId} />;
-        return;
       case "note":
         return <NoteItem title={item.title} body={item.body} />;
       case "task":

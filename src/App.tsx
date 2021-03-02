@@ -3,7 +3,6 @@ import styles from "./App.module.css";
 import { Item, ItemId } from "./common/types";
 import Aside from "./components/Aside/Aside";
 import Main from "./components/Main/Main";
-import Section from "./components/Section/Section";
 
 function App() {
   const [items, setItems] = useState<Record<ItemId, Item>>({
@@ -43,14 +42,10 @@ function App() {
     });
   };
 
-  const SectionComponent = () => (
-    <Section items={items} toggleCheck={toggleCheck} />
-  );
-
   return (
     <div className={styles.app}>
       <Aside />
-      <Main Section={SectionComponent} />
+      <Main items={items} toggleCheck={toggleCheck} />
     </div>
   );
 }
