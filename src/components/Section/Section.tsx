@@ -11,9 +11,10 @@ import VideoItem from "../VideoItem/VideoItem";
 type Props = {
   items: Record<ItemId, Item> | undefined;
   toggleCheck: (id: ItemId) => void;
+  deleteItem: (id: string) => void;
 };
 
-const Section: React.FC<Props> = ({ items, toggleCheck }) => {
+const Section: React.FC<Props> = ({ items, toggleCheck, deleteItem }) => {
   const getItemComponent = (key: ItemId, item: Item) => {
     switch (item.type) {
       case "image":
@@ -35,14 +36,18 @@ const Section: React.FC<Props> = ({ items, toggleCheck }) => {
     }
   };
 
+  const onClick = (id: string) => () => deleteItem(id);
+
   return (
     <section className={styles.section}>
       <ul>
         {items &&
-          Object.keys(items).map((key) => (
-            <li key={key} className={styles.item}>
-              {getItemComponent(key, items[key])}
-              <FontAwesomeIcon icon={faTimes} className={styles.delete} />
+          Object.keys(items).map((id) => (
+            <li key={id} className={styles.item}>
+              {getItemComponent(id, items[id])}
+              <div className={styles.delete} onClick={onClick(id)}>
+                <FontAwesomeIcon icon={faTimes} />
+              </div>
             </li>
           ))}
       </ul>

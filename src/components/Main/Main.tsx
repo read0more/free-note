@@ -6,12 +6,13 @@ import styles from "./Main.module.css";
 type Props = {
   items: Record<ItemId, Item> | undefined;
   toggleCheck: (id: ItemId) => void;
+  deleteItem: (id: string) => void;
 };
 
-const Main: React.FC<Props> = ({ items, toggleCheck }) => (
+const Main: React.FC<Props> = ({ items, toggleCheck, deleteItem }) => (
   <main className={styles.main}>
     <h1 className={styles.title}>Free Note</h1>
-    <Section items={items} toggleCheck={toggleCheck} />
+    <Section items={items} toggleCheck={toggleCheck} deleteItem={deleteItem} />
   </main>
 );
 

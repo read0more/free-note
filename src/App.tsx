@@ -39,10 +39,18 @@ function App() {
     setModalContent(null);
   };
 
+  const deleteItem = (id: string) => {
+    setItems((items) => {
+      const updated = { ...items };
+      delete updated[id];
+      return updated;
+    });
+  };
+
   return (
     <div className={styles.app}>
       <Aside addItem={addItem} openModal={openModal} closeModal={closeModal} />
-      <Main items={items} toggleCheck={toggleCheck} />
+      <Main items={items} toggleCheck={toggleCheck} deleteItem={deleteItem} />
       {modalContent && <Modal closeModal={closeModal}>{modalContent}</Modal>}
     </div>
   );
