@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./App.module.css";
 import { Item, ItemId } from "./common/types";
 import Aside from "./components/Aside/Aside";
@@ -8,6 +8,13 @@ import Modal from "./components/Modal/Modal";
 function App() {
   const [items, setItems] = useState<Record<ItemId, Item>>();
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
+
+  useEffect(() => {
+    const items = localStorage.getItem("items");
+    if (items) {
+      setItems(JSON.parse(items) as Record<ItemId, Item>);
+    }
+  }, []);
 
   const toggleCheck = (id: ItemId) => {
     if (!items) {
@@ -20,15 +27,23 @@ function App() {
       return;
     }
 
-    setItems({
+    const updated = {
       ...items,
       [id]: { ...target, checked: !target.checked },
-    });
+    };
+    setItems(updated);
+    saveItem(updated);
+  };
+
+  const saveItem = (items: Record<ItemId, Item>) => {
+    localStorage.setItem("items", JSON.stringify(items));
   };
 
   const addItem = (item: Item) => {
     const id = Date.now();
-    setItems({ ...items, [id]: { ...item } });
+    const updated = { ...items, [id]: { ...item } };
+    setItems(updated);
+    saveItem(updated);
   };
 
   const openModal = (content: JSX.Element) => {
@@ -43,6 +58,7 @@ function App() {
     setItems((items) => {
       const updated = { ...items };
       delete updated[id];
+      saveItem(updated);
       return updated;
     });
   };
