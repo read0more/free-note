@@ -63,10 +63,32 @@ function App() {
     });
   };
 
+  const swapItem = (id1: string, id2: string) => {
+    if (!id1 || !id2) {
+      return;
+    }
+
+    if (id1 === id2) {
+      return;
+    }
+
+    setItems((items) => {
+      const updated = { ...items };
+      [updated[id1], updated[id2]] = [updated[id2], updated[id1]];
+      saveItem(updated);
+      return updated;
+    });
+  };
+
   return (
     <div className={styles.app}>
       <Aside addItem={addItem} openModal={openModal} closeModal={closeModal} />
-      <Main items={items} toggleCheck={toggleCheck} deleteItem={deleteItem} />
+      <Main
+        items={items}
+        toggleCheck={toggleCheck}
+        deleteItem={deleteItem}
+        swapItem={swapItem}
+      />
       {modalContent && <Modal closeModal={closeModal}>{modalContent}</Modal>}
     </div>
   );
