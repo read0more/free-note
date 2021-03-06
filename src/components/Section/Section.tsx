@@ -49,6 +49,7 @@ const Section: React.FC<Props> = ({
     mouseDownEvent: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
     const mouseDownElement = mouseDownEvent.currentTarget.closest("li");
+
     if (mouseDownElement?.nodeName !== "LI") {
       return;
     }
@@ -58,8 +59,15 @@ const Section: React.FC<Props> = ({
     const rect = currentTarget.getBoundingClientRect();
     let shiftX = mouseDownEvent.clientX - rect.left;
     let shiftY = mouseDownEvent.clientY - rect.top;
-
     const width = currentTarget.getBoundingClientRect().width;
+    // item의 왼쪽 여백 + 오른쪽 여백 구해서 left 최대값 구함
+    let xLimit =
+      currentTarget.offsetLeft +
+      (document.documentElement.offsetWidth -
+        currentTarget.offsetWidth -
+        currentTarget.offsetLeft);
+    let yLimit =
+      document.documentElement.scrollHeight - currentTarget.offsetHeight;
 
     clone.style.position = "absolute";
     clone.style.zIndex = "1000";
@@ -68,8 +76,19 @@ const Section: React.FC<Props> = ({
     sectionRef.current?.append(clone);
 
     function moveAt(x: number, y: number) {
-      clone.style.left = x - shiftX + "px";
-      clone.style.top = y - shiftY + "px";
+      let moveLeft = x - shiftX;
+      let moveTop = y - shiftY;
+
+      if (xLimit < moveLeft) {
+        moveLeft = xLimit;
+      }
+
+      if (yLimit < moveTop) {
+        moveTop = yLimit;
+      }
+
+      clone.style.left = moveLeft + "px";
+      clone.style.top = moveTop + "px";
     }
 
     moveAt(mouseDownEvent.pageX, mouseDownEvent.pageY);
