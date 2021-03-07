@@ -49,18 +49,13 @@ const Section: React.FC<Props> = ({
     mouseDownEvent: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
     const mouseDownElement = mouseDownEvent.currentTarget.closest("li");
-
-    if (mouseDownElement?.nodeName !== "LI") {
-      return;
-    }
-
     const currentTarget = mouseDownEvent.currentTarget;
-    const clone = currentTarget.cloneNode(true) as HTMLLIElement;
+    const width = currentTarget.getBoundingClientRect().width;
+    let clone = currentTarget.cloneNode(true) as HTMLLIElement;
     const rect = currentTarget.getBoundingClientRect();
     let shiftX = mouseDownEvent.clientX - rect.left;
     let shiftY = mouseDownEvent.clientY - rect.top;
-    const width = currentTarget.getBoundingClientRect().width;
-    // item의 왼쪽 여백 + 오른쪽 여백 구해서 left 최대값 구함
+    // item의 왼쪽 여백 + 오른쪽 여백 구해서 화면을 넘어가지 않는 선에서의 left의 최대값 구함
     let xLimit =
       currentTarget.offsetLeft +
       (document.documentElement.offsetWidth -
@@ -68,14 +63,19 @@ const Section: React.FC<Props> = ({
         currentTarget.offsetLeft);
     let yLimit =
       document.documentElement.scrollHeight - currentTarget.offsetHeight;
+    let isClick = true;
 
     clone.style.position = "absolute";
     clone.style.zIndex = "1000";
     clone.style.width = width + "px";
     clone.style.opacity = "0.6";
-    sectionRef.current?.append(clone);
+    clone.style.cursor = "move";
 
-    function moveAt(x: number, y: number) {
+    setTimeout(() => {
+      isClick = false;
+    }, 300);
+
+    function moveAt(target: HTMLElement, x: number, y: number) {
       let moveLeft = x - shiftX;
       let moveTop = y - shiftY;
 
@@ -87,24 +87,18 @@ const Section: React.FC<Props> = ({
         moveTop = yLimit;
       }
 
-      clone.style.left = moveLeft + "px";
-      clone.style.top = moveTop + "px";
+      target.style.left = moveLeft + "px";
+      target.style.top = moveTop + "px";
     }
-
-    moveAt(mouseDownEvent.pageX, mouseDownEvent.pageY);
-
-    function onMouseMove(event: MouseEvent) {
-      moveAt(event.pageX, event.pageY);
-    }
-
-    clone.ondragstart = function () {
-      return false;
-    };
-
-    document.addEventListener("mousemove", onMouseMove);
 
     function onMouseUp(mouseUpevent: MouseEvent) {
       document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+      clone.remove();
+
+      if (!clone) {
+        return;
+      }
 
       clone.hidden = true;
       const below = document.elementFromPoint(
@@ -117,12 +111,34 @@ const Section: React.FC<Props> = ({
       if (belowLi) {
         swapItem(belowLi.dataset.id || "", mouseDownElement?.dataset.id || "");
       }
-
-      clone.removeEventListener("mouseup", onMouseUp);
-      clone.remove();
     }
 
-    clone.addEventListener("mouseup", onMouseUp);
+    function onMouseMove(event: MouseEvent) {
+      const delta = 5;
+      const diffX = Math.abs(mouseDownEvent.pageX - event.pageX);
+      const diffY = Math.abs(mouseDownEvent.pageY - event.pageY);
+
+      // 미세하게 움직였다면 item 이동할거라 생각하고 처리
+      if (isClick) {
+        if (delta < diffX || delta < diffY) {
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+          clone.remove();
+        }
+        return;
+      }
+
+      sectionRef.current?.append(clone);
+
+      clone.ondragstart = function () {
+        return false;
+      };
+
+      moveAt(clone, event.pageX, event.pageY);
+    }
+
+    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("mousemove", onMouseMove);
   };
 
   return (
