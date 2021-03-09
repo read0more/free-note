@@ -4,7 +4,7 @@ import {
   getYoutubeURLFromVideoId,
 } from "../../common/helpers";
 import { Item } from "../../common/types";
-import styles from "./AddForm.module.css";
+import styles from "./ItemForm.module.css";
 
 type Props = {
   item: Item;
@@ -12,7 +12,7 @@ type Props = {
   closeModal: () => void;
 };
 
-const AddForm: React.FC<Props> = ({ item, addOrEditItem, closeModal }) => {
+const ItemForm: React.FC<Props> = ({ item, addOrEditItem, closeModal }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const urlRef = useRef<HTMLInputElement>(null);
@@ -141,4 +141,4 @@ const AddForm: React.FC<Props> = ({ item, addOrEditItem, closeModal }) => {
   );
 };
 
-export default AddForm;
+export default ItemForm;
