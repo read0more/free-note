@@ -8,25 +8,45 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { Item, ItemType } from "../../common/types";
-import AddForm from "../AddForm/AddForm";
 
 type Props = {
-  addItem: (item: Item) => void;
-  openModal: (content: JSX.Element) => void;
-  closeModal: () => void;
+  openFormModal: (item: Item) => void;
 };
 
-const Aside: React.FC<Props> = ({ addItem, openModal, closeModal }) => {
-  const onClick = (itemType: ItemType) => {
-    return () => {
-      openModal(
-        <AddForm
-          itemType={itemType}
-          addItem={addItem}
-          closeModal={closeModal}
-        />
-      );
-    };
+const Aside: React.FC<Props> = ({ openFormModal }) => {
+  const onClick = (itemType: ItemType) => () => {
+    const id = `${Date.now()}`;
+    switch (itemType) {
+      case "image":
+        return openFormModal({
+          id,
+          type: "image",
+          title: "",
+          url: "",
+        });
+      case "video":
+        return openFormModal({
+          id,
+          type: "video",
+          title: "",
+          videoId: "",
+        });
+      case "note":
+        return openFormModal({
+          id,
+          type: "note",
+          title: "",
+          body: "",
+        });
+      case "task":
+        return openFormModal({
+          id,
+          type: "task",
+          title: "",
+          body: "",
+          checked: false,
+        });
+    }
   };
 
   return (

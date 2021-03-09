@@ -7,3 +7,7 @@ export function getYoutubeVideoIdFromURL(url: string): string {
 
   return videoId;
 }
+
+export function getYoutubeURLFromVideoId(videoId: string): string {
+  return videoId ? `https://youtu.be/${videoId}` : "";
+}

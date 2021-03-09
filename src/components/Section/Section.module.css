@@ -15,10 +15,18 @@
   margin-bottom: 1em;
 }
 
-.delete {
+.icon-box {
   position: absolute;
   top: 1em;
   right: 1em;
+}
+
+.delete {
   cursor: pointer;
   color: orangered;
+}
+
+.edit {
+  margin-top: 0.5em;
+  cursor: pointer;
 }

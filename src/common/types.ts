@@ -1,16 +1,19 @@
 export type Image = {
+  id: string;
   type: "image";
   title: string;
   url: string;
 };
 
 export type Video = {
+  id: string;
   type: "video";
   title: string;
   videoId: string;
 };
 
 export type Note = {
+  id: string;
   type: "note";
   title: string;
   body: string;

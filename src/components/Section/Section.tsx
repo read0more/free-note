@@ -4,7 +4,7 @@ import NoteItem from "../NoteItem/NoteItem";
 import TaskItem from "../TaskItem/TaskItem";
 import styles from "./Section.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ImageItem from "../ImageItem/ImageItem";
 import VideoItem from "../VideoItem/VideoItem";
 
@@ -13,6 +13,7 @@ type Props = {
   toggleCheck: (id: ItemId) => void;
   deleteItem: (id: string) => void;
   swapItem: (id1: string, id2: string) => void;
+  openFormModal: (item: Item) => void;
 };
 
 const Section: React.FC<Props> = ({
@@ -20,9 +21,10 @@ const Section: React.FC<Props> = ({
   toggleCheck,
   deleteItem,
   swapItem,
+  openFormModal,
 }) => {
   const sectionRef = useRef<HTMLElement>(null);
-  const getItemComponent = (key: ItemId, item: Item) => {
+  const getItemComponent = (item: Item) => {
     switch (item.type) {
       case "image":
         return <ImageItem title={item.title} url={item.url} />;
@@ -33,7 +35,7 @@ const Section: React.FC<Props> = ({
       case "task":
         return (
           <TaskItem
-            id={key}
+            id={item.id}
             title={item.title}
             body={item.body}
             checked={item.checked}
@@ -43,7 +45,8 @@ const Section: React.FC<Props> = ({
     }
   };
 
-  const onClick = (id: string) => () => deleteItem(id);
+  const onDeleteClick = (id: string) => () => deleteItem(id);
+  const onEditClick = (item: Item) => () => openFormModal(item);
 
   const onMouseDown = (
     mouseDownEvent: React.MouseEvent<HTMLLIElement, MouseEvent>
@@ -152,9 +155,14 @@ const Section: React.FC<Props> = ({
               data-id={id}
               onMouseDown={onMouseDown}
             >
-              {getItemComponent(id, items[id])}
-              <div className={styles.delete} onClick={onClick(id)}>
-                <FontAwesomeIcon icon={faTimes} />
+              {getItemComponent(items[id])}
+              <div className={styles["icon-box"]}>
+                <div className={styles.delete} onClick={onDeleteClick(id)}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </div>
+                <div className={styles.edit} onClick={onEditClick(items[id])}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </div>
               </div>
             </li>
           ))}
@@ -162,5 +170,5 @@ const Section: React.FC<Props> = ({
     </section>
   );
 };
-
+// openFormModal({ type: "image", title: "", url: "" });
 export default Section;

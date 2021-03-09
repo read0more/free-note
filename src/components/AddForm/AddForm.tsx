@@ -1,15 +1,18 @@
 import React, { useEffect, useRef } from "react";
-import { getYoutubeVideoIdFromURL } from "../../common/helpers";
-import { Item, ItemType } from "../../common/types";
+import {
+  getYoutubeVideoIdFromURL,
+  getYoutubeURLFromVideoId,
+} from "../../common/helpers";
+import { Item } from "../../common/types";
 import styles from "./AddForm.module.css";
 
 type Props = {
-  itemType: ItemType;
-  addItem: (item: Item) => void;
+  item: Item;
+  addOrEditItem: (item: Item) => void;
   closeModal: () => void;
 };
 
-const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
+const AddForm: React.FC<Props> = ({ item, addOrEditItem, closeModal }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const urlRef = useRef<HTMLInputElement>(null);
@@ -25,31 +28,31 @@ const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
     const url = urlRef.current?.value || "";
     const body = bodyRef.current?.value || "";
 
-    switch (itemType) {
+    switch (item.type) {
       case "image":
-        addItem({
-          type: itemType,
+        addOrEditItem({
+          ...item,
           title,
           url: url,
         });
         break;
       case "video":
-        addItem({
-          type: itemType,
+        addOrEditItem({
+          ...item,
           title,
           videoId: getYoutubeVideoIdFromURL(url),
         });
         break;
       case "note":
-        addItem({
-          type: itemType,
+        addOrEditItem({
+          ...item,
           title,
           body,
         });
         break;
       case "task":
-        addItem({
-          type: itemType,
+        addOrEditItem({
+          ...item,
           title,
           body,
           checked: false,
@@ -61,7 +64,7 @@ const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
   };
 
   const getDetailInputElements = () => {
-    switch (itemType) {
+    switch (item.type) {
       case "image":
         return (
           <>
@@ -72,6 +75,7 @@ const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
               ref={urlRef}
               placeholder={"이미지 URL을 입력해주세요."}
               className={styles.input}
+              defaultValue={item.url}
             ></input>
           </>
         );
@@ -85,6 +89,7 @@ const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
               ref={urlRef}
               placeholder={"Youtube 공유URL을 입력해주세요."}
               className={styles.input}
+              defaultValue={getYoutubeURLFromVideoId(item.videoId)}
             ></input>
           </>
         );
@@ -97,6 +102,7 @@ const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
               ref={bodyRef}
               placeholder={"메모할 내용을 입력해주세요."}
               className={styles.textarea}
+              defaultValue={item.body}
             ></textarea>
           </>
         );
@@ -109,6 +115,7 @@ const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
               ref={bodyRef}
               placeholder={"업무 내용을 입력해주세요."}
               className={styles.textarea}
+              defaultValue={item.body}
             ></textarea>
           </>
         );
@@ -124,6 +131,7 @@ const AddForm: React.FC<Props> = ({ itemType, addItem, closeModal }) => {
         required={true}
         placeholder={"제목"}
         className={styles.input}
+        defaultValue={item.title}
       ></input>
       {getDetailInputElements()}
       <button type="submit" className={styles.button}>

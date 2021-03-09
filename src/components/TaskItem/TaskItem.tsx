@@ -23,12 +23,12 @@ const TaskItem: React.FC<Props> = ({
       <span>
         <input
           type="checkbox"
-          id="input"
+          id={id}
           className={styles.input}
           checked={checked}
           onChange={onChange}
         ></input>
-        <label htmlFor="input" className={styles.label}>
+        <label htmlFor={id} className={styles.label}>
           {body}
         </label>
       </span>

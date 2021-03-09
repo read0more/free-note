@@ -8,6 +8,7 @@ type Props = {
   toggleCheck: (id: ItemId) => void;
   deleteItem: (id: string) => void;
   swapItem: (id1: string, id2: string) => void;
+  openFormModal: (item: Item) => void;
 };
 
 const Main: React.FC<Props> = ({
@@ -15,6 +16,7 @@ const Main: React.FC<Props> = ({
   toggleCheck,
   deleteItem,
   swapItem,
+  openFormModal,
 }) => (
   <main className={styles.main}>
     <h1 className={styles.title}>Free Note</h1>
@@ -23,6 +25,7 @@ const Main: React.FC<Props> = ({
       toggleCheck={toggleCheck}
       deleteItem={deleteItem}
       swapItem={swapItem}
+      openFormModal={openFormModal}
     />
   </main>
 );

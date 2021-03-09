@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./App.module.css";
 import { Item, ItemId } from "./common/types";
+import AddForm from "./components/AddForm/AddForm";
 import Aside from "./components/Aside/Aside";
 import Main from "./components/Main/Main";
 import Modal from "./components/Modal/Modal";
@@ -39,9 +40,8 @@ function App() {
     localStorage.setItem("items", JSON.stringify(items));
   };
 
-  const addItem = (item: Item) => {
-    const id = Date.now();
-    const updated = { ...items, [id]: { ...item } };
+  const addOrEditItem = (item: Item) => {
+    const updated = { ...items, [item.id]: { ...item } };
     setItems(updated);
     saveItem(updated);
   };
@@ -52,6 +52,16 @@ function App() {
 
   const closeModal = () => {
     setModalContent(null);
+  };
+
+  const openFormModal = (item: Item) => {
+    openModal(
+      <AddForm
+        item={item}
+        addOrEditItem={addOrEditItem}
+        closeModal={closeModal}
+      />
+    );
   };
 
   const deleteItem = (id: string) => {
@@ -75,6 +85,8 @@ function App() {
     setItems((items) => {
       const updated = { ...items };
       [updated[id1], updated[id2]] = [updated[id2], updated[id1]];
+      updated[id1].id = id1;
+      updated[id2].id = id2;
       saveItem(updated);
       return updated;
     });
@@ -82,12 +94,13 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <Aside addItem={addItem} openModal={openModal} closeModal={closeModal} />
+      <Aside openFormModal={openFormModal} />
       <Main
         items={items}
         toggleCheck={toggleCheck}
         deleteItem={deleteItem}
         swapItem={swapItem}
+        openFormModal={openFormModal}
       />
       {modalContent && <Modal closeModal={closeModal}>{modalContent}</Modal>}
     </div>

@@ -2,7 +2,10 @@ import React from "react";
 import { Video } from "../../common/types";
 import styles from "./VideoItem.module.css";
 
-const VideoItem: React.FC<Omit<Video, "type">> = ({ title, videoId }) => {
+const VideoItem: React.FC<Omit<Video, "id" | "type">> = ({
+  title,
+  videoId,
+}) => {
   return (
     <article className={styles.article}>
       <iframe
