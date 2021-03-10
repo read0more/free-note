@@ -170,5 +170,5 @@ const Section: React.FC<Props> = ({
     </section>
   );
 };
-// openFormModal({ type: "image", title: "", url: "" });
+
 export default Section;
