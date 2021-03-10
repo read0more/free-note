@@ -5,7 +5,7 @@ import styles from "./NoteItem.module.css";
 const NoteItem: React.FC<Omit<Note, "id" | "type">> = ({ title, body }) => (
   <article>
     <b className={styles.title}>{title}</b>
-    <div>{body}</div>
+    <div className={styles.body}>{body}</div>
   </article>
 );
 

@@ -47,7 +47,7 @@ const ItemForm: React.FC<Props> = ({ item, addOrEditItem, closeModal }) => {
         addOrEditItem({
           ...item,
           title,
-          body,
+          body: body.trim(),
         });
         break;
       case "task":
