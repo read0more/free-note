@@ -74,9 +74,13 @@ const Section: React.FC<Props> = ({
     clone.style.opacity = "0.6";
     clone.style.cursor = "move";
 
+    clone.ondragstart = function () {
+      return false;
+    };
+
     setTimeout(() => {
       isClick = false;
-    }, 300);
+    }, 200);
 
     function moveAt(target: HTMLElement, x: number, y: number) {
       let moveLeft = x - shiftX;
@@ -114,6 +118,8 @@ const Section: React.FC<Props> = ({
       if (belowLi) {
         swapItem(belowLi.dataset.id || "", mouseDownElement?.dataset.id || "");
       }
+
+      sectionRef.current!.style.userSelect = "";
     }
 
     function onMouseMove(event: MouseEvent) {
@@ -131,11 +137,8 @@ const Section: React.FC<Props> = ({
         return;
       }
 
+      sectionRef.current!.style.userSelect = "none";
       sectionRef.current?.append(clone);
-
-      clone.ondragstart = function () {
-        return false;
-      };
 
       moveAt(clone, event.pageX, event.pageY);
     }
