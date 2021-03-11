@@ -51,26 +51,38 @@ const Aside: React.FC<Props> = ({ openFormModal }) => {
 
   return (
     <aside className={styles.aside}>
-      <FontAwesomeIcon
-        icon={faImage}
-        className={styles.logo}
-        onClick={onClick("image")}
-      />
-      <FontAwesomeIcon
-        icon={faYoutube}
-        className={styles.logo}
-        onClick={onClick("video")}
-      />
-      <FontAwesomeIcon
-        icon={faStickyNote}
-        className={styles.logo}
-        onClick={onClick("note")}
-      />
-      <FontAwesomeIcon
-        icon={faTasks}
-        className={styles.logo}
-        onClick={onClick("task")}
-      />
+      <div className={styles["logo-box"]}>
+        <FontAwesomeIcon
+          icon={faImage}
+          className={styles.logo}
+          onClick={onClick("image")}
+        />
+        <p className={styles.text}>IMAGE</p>
+      </div>
+      <div className={styles["logo-box"]}>
+        <FontAwesomeIcon
+          icon={faYoutube}
+          className={styles.logo}
+          onClick={onClick("video")}
+        />
+        <p className={styles.text}>VIDEO</p>
+      </div>
+      <div className={styles["logo-box"]}>
+        <FontAwesomeIcon
+          icon={faStickyNote}
+          className={styles.logo}
+          onClick={onClick("note")}
+        />
+        <p className={styles.text}>NOTE</p>
+      </div>
+      <div className={styles["logo-box"]}>
+        <FontAwesomeIcon
+          icon={faTasks}
+          className={styles.logo}
+          onClick={onClick("task")}
+        />
+        <p className={styles.text}>TASK</p>
+      </div>
     </aside>
   );
 };

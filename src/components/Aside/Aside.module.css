@@ -12,13 +12,30 @@
   background-color: noteBlack;
 }
 
-.logo {
+.logo-box {
   color: white;
-  font-size: 2rem;
+  text-align: center;
   cursor: pointer;
+}
+
+.logo {
+  font-size: 2rem;
   transition: color ease-in 0.2s;
 }
 
-.logo:hover {
+.logo-box:hover .logo {
   color: noteGreen;
+}
+
+.text {
+  transition: all 0.5s ease-in-out;
+  position: relative;
+  left: 100%;
+  opacity: 0;
+  margin: 0.1em;
+}
+
+.logo-box:hover .text {
+  left: 0;
+  opacity: 1;
 }
