@@ -6,7 +6,9 @@ const ImageItem: React.FC<Omit<Image, "id" | "type">> = ({ title, url }) => (
   <article>
     <figure className={styles.figure}>
       <img src={url} alt={title} className={styles.img} />
-      <figcaption className={styles.figcaption}>{title}</figcaption>
+      <figcaption>
+        <h2 className={styles.title}>{title}</h2>
+      </figcaption>
     </figure>
   </article>
 );

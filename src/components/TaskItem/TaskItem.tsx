@@ -19,7 +19,7 @@ const TaskItem: React.FC<Props> = ({
 
   return (
     <article>
-      <b className={styles.title}>{title}</b>
+      <h2 className={styles.title}>{title}</h2>
       <span>
         <input
           type="checkbox"
