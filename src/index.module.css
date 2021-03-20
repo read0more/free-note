@@ -14,6 +14,12 @@ code {
     monospace;
 }
 
+button {
+  padding: 0;
+  background: none;
+  border: none;
+}
+
 figure,
 ul,
 ol,

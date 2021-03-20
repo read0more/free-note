@@ -15,9 +15,9 @@ const Modal: React.FC<Props> = ({ children, closeModal }) => {
       <div className={styles.wrapper}>
         <>
           {children}
-          <div className={styles.close} onClick={closeModal}>
+          <button className={styles.close} onClick={closeModal}>
             <FontAwesomeIcon icon={faTimes} />
-          </div>
+          </button>
         </>
       </div>
     </>

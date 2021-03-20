@@ -160,12 +160,15 @@ const Section: React.FC<Props> = ({
             >
               {getItemComponent(items[id])}
               <div className={styles["icon-box"]}>
-                <div className={styles.delete} onClick={onDeleteClick(id)}>
+                <button className={styles.delete} onClick={onDeleteClick(id)}>
                   <FontAwesomeIcon icon={faTimes} />
-                </div>
-                <div className={styles.edit} onClick={onEditClick(items[id])}>
+                </button>
+                <button
+                  className={styles.edit}
+                  onClick={onEditClick(items[id])}
+                >
                   <FontAwesomeIcon icon={faEdit} />
-                </div>
+                </button>
               </div>
             </li>
           ))}
