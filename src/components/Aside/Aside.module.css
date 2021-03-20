@@ -1,7 +1,7 @@
 @value noteBlack, noteGreen from '/src/common/colors.css';
 
 .menu {
-  width: 75px;
+  width: 4vw;
   height: 100vh;
   display: flex;
   position: sticky;

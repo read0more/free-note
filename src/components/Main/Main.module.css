@@ -1,6 +1,7 @@
 @value noteBlack, noteGrey from '/src/common/colors.css';
 
 .main {
+  width: 96vw;
   background-color: noteGrey;
   flex-grow: 1;
 }
