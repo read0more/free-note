@@ -16,7 +16,7 @@ const VideoItem: React.FC<Omit<Video, "id" | "type">> = ({
         title="Youtube Player"
         className={styles.video}
       ></iframe>
-      <h2 className={styles.title}>{title}</h2>
+      <h2 className={"item-title"}>{title}</h2>
     </article>
   );
 };

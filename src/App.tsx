@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./App.module.css";
+import "./common/item.css";
 import { Item, ItemId } from "./common/types";
 import AddForm from "./components/ItemForm/ItemForm";
 import Aside from "./components/Aside/Aside";
