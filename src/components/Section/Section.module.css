@@ -3,32 +3,3 @@
 .section {
   margin: 1em;
 }
-
-.item {
-  position: relative;
-  padding: 1em;
-  background-color: white;
-  border-radius: 10px;
-}
-
-.item:not(:last-child) {
-  margin-bottom: 1em;
-}
-
-.icon-box {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 1em;
-  right: 1em;
-}
-
-.delete {
-  cursor: pointer;
-  color: orangered;
-}
-
-.edit {
-  margin-top: 0.5em;
-  cursor: pointer;
-}
