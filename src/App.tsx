@@ -7,44 +7,59 @@ import Aside from "./components/Aside/Aside";
 import Main from "./components/Main/Main";
 import Modal from "./components/Modal/Modal";
 
+type stateType = { items: Record<ItemId, Item>; itemOrder: string[] };
+
 function App() {
-  const [items, setItems] = useState<Record<ItemId, Item>>();
+  const [state, setState] = useState<stateType>();
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
-    const items = localStorage.getItem("items");
-    if (items) {
-      setItems(JSON.parse(items) as Record<ItemId, Item>);
+    const storageState = localStorage.getItem("state");
+    if (storageState) {
+      setState(JSON.parse(storageState));
     }
   }, []);
 
+  const getItems = () => {
+    return state?.itemOrder.map((itemId) => state.items[itemId]);
+  };
+
   const toggleCheck = (id: ItemId) => {
-    if (!items) {
+    if (!state) {
       return;
     }
 
-    const target = items[id];
+    const target = state.items[id];
 
     if (target.type !== "task") {
       return;
     }
 
-    const updated = {
-      ...items,
-      [id]: { ...target, checked: !target.checked },
-    };
-    setItems(updated);
-    saveItem(updated);
+    const newItems = { ...state.items };
+    newItems[id] = { ...target, checked: !target.checked };
+
+    const newState: stateType = { ...state, items: newItems };
+    setState(newState);
+    saveItem(newState);
   };
 
-  const saveItem = (items: Record<ItemId, Item>) => {
-    localStorage.setItem("items", JSON.stringify(items));
+  const saveItem = (items: stateType) => {
+    localStorage.setItem("state", JSON.stringify(items));
   };
 
   const addOrEditItem = (item: Item) => {
-    const updated = { ...items, [item.id]: { ...item } };
-    setItems(updated);
-    saveItem(updated);
+    const newItems = state
+      ? { ...state.items, [item.id]: item }
+      : { [item.id]: item };
+    const newItemOrder = state ? [...state.itemOrder] : [];
+
+    if (!state?.items[item.id]) {
+      newItemOrder.push(item.id);
+    }
+
+    const newState: stateType = { items: newItems, itemOrder: newItemOrder };
+    setState(newState);
+    saveItem(newState);
   };
 
   const openModal = (content: JSX.Element) => {
@@ -66,38 +81,46 @@ function App() {
   };
 
   const deleteItem = (id: string) => {
-    setItems((items) => {
-      const updated = { ...items };
-      delete updated[id];
-      saveItem(updated);
-      return updated;
-    });
+    if (!state) {
+      return;
+    }
+
+    const filteredItems = { ...state.items };
+    delete filteredItems[id];
+    const filteredItemOrder = state.itemOrder.filter((itemId) => itemId !== id);
+
+    const newState: stateType = {
+      items: filteredItems,
+      itemOrder: filteredItemOrder,
+    };
+    setState(newState);
+    saveItem(newState);
   };
 
-  const swapItem = (id1: string, id2: string) => {
-    if (!id1 || !id2) {
+  const swapItem = (sourceOrder: number, destinationOrder: number) => {
+    if (!state) {
       return;
     }
 
-    if (id1 === id2) {
+    if (sourceOrder === destinationOrder) {
       return;
     }
 
-    setItems((items) => {
-      const updated = { ...items };
-      [updated[id1], updated[id2]] = [updated[id2], updated[id1]];
-      updated[id1].id = id1;
-      updated[id2].id = id2;
-      saveItem(updated);
-      return updated;
-    });
+    const newItemOrder = [...state.itemOrder];
+    const sourceItemId = state.itemOrder[sourceOrder];
+
+    newItemOrder.splice(sourceOrder, 1);
+    newItemOrder.splice(destinationOrder, 0, sourceItemId);
+
+    const newState: stateType = { ...state, itemOrder: newItemOrder };
+    setState(newState);
   };
 
   return (
     <div className={styles.app}>
       <Aside openFormModal={openFormModal} />
       <Main
-        items={items}
+        items={getItems()}
         toggleCheck={toggleCheck}
         deleteItem={deleteItem}
         swapItem={swapItem}

@@ -11,25 +11,27 @@ import {
   faTimes,
   faArrowsAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { Draggable } from "react-beautiful-dnd";
 
 type Props = {
   item: Item;
+  index: number;
   sectionRef: RefObject<HTMLElement>;
   toggleCheck: (id: ItemId) => void;
   deleteItem: (id: string) => void;
-  swapItem: (id1: string, id2: string) => void;
+  swapItem: (id1: number, id2: number) => void;
   openFormModal: (item: Item) => void;
 };
 
 const ItemWrapper: React.FC<Props> = ({
   item,
+  index,
   sectionRef,
   toggleCheck,
   deleteItem,
   swapItem,
   openFormModal,
 }) => {
-  console.log(sectionRef.current);
   const onDeleteClick = (id: string) => () => deleteItem(id);
   const onEditClick = (item: Item) => () => openFormModal(item);
 
@@ -74,20 +76,28 @@ const ItemWrapper: React.FC<Props> = ({
   };
 
   return (
-    <li key={item.id} className={styles.item} data-id={item.id}>
-      {getItemComponent(item)}
-      <div className={styles["icon-box"]}>
-        <button className={styles.delete} onClick={onDeleteClick(item.id)}>
-          <FontAwesomeIcon icon={faTimes} />
-        </button>
-        <button className={styles.edit} onClick={onEditClick(item)}>
-          <FontAwesomeIcon icon={faEdit} />
-        </button>
-        <button className={styles.move}>
-          <FontAwesomeIcon icon={faArrowsAlt} />
-        </button>
-      </div>
-    </li>
+    <Draggable draggableId={item.id} index={index}>
+      {(provided) => (
+        <li
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+          className={styles.item}
+        >
+          {getItemComponent(item)}
+          <div className={styles["icon-box"]}>
+            <button className={styles.delete} onClick={onDeleteClick(item.id)}>
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+            <button className={styles.edit} onClick={onEditClick(item)}>
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+            <button className={styles.move} {...provided.dragHandleProps}>
+              <FontAwesomeIcon icon={faArrowsAlt} />
+            </button>
+          </div>
+        </li>
+      )}
+    </Draggable>
   );
 };
 
