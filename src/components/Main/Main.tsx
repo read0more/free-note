@@ -4,10 +4,10 @@ import Section from "../Section/Section";
 import styles from "./Main.module.css";
 
 type Props = {
-  items: Record<ItemId, Item> | undefined;
+  items: Item[] | undefined;
   toggleCheck: (id: ItemId) => void;
   deleteItem: (id: string) => void;
-  swapItem: (id1: string, id2: string) => void;
+  swapItem: (id1: number, id2: number) => void;
   openFormModal: (item: Item) => void;
 };
 

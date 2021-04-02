@@ -1,11 +1,10 @@
 import React from "react";
-import { Video } from "../../common/types";
+import { Video } from "../../../common/types";
 import styles from "./VideoItem.module.css";
 
-const VideoItem: React.FC<Omit<Video, "id" | "type">> = ({
-  title,
-  videoId,
-}) => {
+const VideoItem: React.FC<
+  Omit<Video, "id" | "type"> & { titleStyle: string }
+> = ({ title, videoId, titleStyle }) => {
   return (
     <article className={styles.article}>
       <iframe
@@ -16,7 +15,7 @@ const VideoItem: React.FC<Omit<Video, "id" | "type">> = ({
         title="Youtube Player"
         className={styles.video}
       ></iframe>
-      <h2 className={"item-title"}>{title}</h2>
+      <h2 className={titleStyle}>{title}</h2>
     </article>
   );
 };
