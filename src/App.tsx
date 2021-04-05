@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./App.module.css";
 import "./common/item.css";
 import { Item, ItemId } from "./common/types";
+import Header from "./components/Header/Header";
 import AddForm from "./components/ItemForm/ItemForm";
-import Aside from "./components/Aside/Aside";
-import Main from "./components/Main/Main";
 import Modal from "./components/Modal/Modal";
+import Section from "./components/Section/Section";
 
 type stateType = { items: Record<ItemId, Item>; itemOrder: string[] };
 
@@ -117,17 +117,20 @@ function App() {
   };
 
   return (
-    <div className={styles.app}>
-      <Aside openFormModal={openFormModal} />
-      <Main
-        items={getItems()}
-        toggleCheck={toggleCheck}
-        deleteItem={deleteItem}
-        swapItem={swapItem}
-        openFormModal={openFormModal}
-      />
+    <>
+      <main className={styles.main}>
+        <Header title={"free note"} openFormModal={openFormModal} />
+        <Section
+          items={getItems()}
+          toggleCheck={toggleCheck}
+          deleteItem={deleteItem}
+          swapItem={swapItem}
+          openFormModal={openFormModal}
+        />
+      </main>
+
       {modalContent && <Modal closeModal={closeModal}>{modalContent}</Modal>}
-    </div>
+    </>
   );
 }
 

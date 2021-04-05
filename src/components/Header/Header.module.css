@@ -1,15 +1,25 @@
 @value noteBlack, noteGreen from '/src/common/colors.css';
 
-.menu {
-  width: 4vw;
-  height: 100vh;
+.header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 0.5em 1em;
   position: sticky;
   top: 0;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  z-index: 99;
   background-color: noteBlack;
+}
+
+.title {
+  text-transform: capitalize;
+}
+
+.menu {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-evenly;
 }
 
 .logo-box {
@@ -25,18 +35,4 @@
 
 .logo-box:hover .logo {
   color: noteGreen;
-}
-
-.text {
-  text-transform: uppercase;
-  transition: all 0.5s ease-in-out;
-  position: relative;
-  left: 100%;
-  opacity: 0;
-  margin: 0.1em;
-}
-
-.logo-box:hover .text {
-  left: 0;
-  opacity: 1;
 }

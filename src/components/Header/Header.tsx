@@ -1,5 +1,6 @@
+import styles from "./Header.module.css";
 import React from "react";
-import styles from "./Aside.module.css";
+import { Item, ItemType } from "../../common/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faImage,
@@ -7,13 +8,13 @@ import {
   faTasks,
 } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { Item, ItemType } from "../../common/types";
 
-type Props = {
+type props = {
+  title: string;
   openFormModal: (item: Item) => void;
 };
 
-const Aside: React.FC<Props> = ({ openFormModal }) => {
+const Header: React.FC<props> = ({ title, openFormModal }) => {
   const onClick = (itemType: ItemType) => () => {
     const id = `${Date.now()}`;
     switch (itemType) {
@@ -50,7 +51,8 @@ const Aside: React.FC<Props> = ({ openFormModal }) => {
   };
 
   return (
-    <aside>
+    <header className={styles.header}>
+      <h1 className={styles.title}>{title}</h1>
       <ul className={styles.menu}>
         <li className={styles["logo-box"]}>
           <FontAwesomeIcon
@@ -58,7 +60,6 @@ const Aside: React.FC<Props> = ({ openFormModal }) => {
             className={styles.logo}
             onClick={onClick("image")}
           />
-          <p className={styles.text}>image</p>
         </li>
         <li className={styles["logo-box"]}>
           <FontAwesomeIcon
@@ -66,7 +67,6 @@ const Aside: React.FC<Props> = ({ openFormModal }) => {
             className={styles.logo}
             onClick={onClick("video")}
           />
-          <p className={styles.text}>video</p>
         </li>
         <li className={styles["logo-box"]}>
           <FontAwesomeIcon
@@ -74,7 +74,6 @@ const Aside: React.FC<Props> = ({ openFormModal }) => {
             className={styles.logo}
             onClick={onClick("note")}
           />
-          <p className={styles.text}>note</p>
         </li>
         <li className={styles["logo-box"]}>
           <FontAwesomeIcon
@@ -82,11 +81,10 @@ const Aside: React.FC<Props> = ({ openFormModal }) => {
             className={styles.logo}
             onClick={onClick("task")}
           />
-          <p className={styles.text}>task</p>
         </li>
       </ul>
-    </aside>
+    </header>
   );
 };
 
-export default Aside;
+export default Header;

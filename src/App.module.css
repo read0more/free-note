@@ -1,4 +1,6 @@
-.app {
-  display: flex;
+@value noteGrey from '/src/common/colors.css';
+
+.main {
   min-height: 100vh;
+  background-color: noteGrey;
 }
