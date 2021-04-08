@@ -1,0 +1,21 @@
+@value noteBlack from '/src/common/colors.css';
+
+.video {
+  width: 100%;
+  height: 100%;
+}
+
+.button-box {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  color: white;
+  background-color: noteBlack;
+  padding: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}

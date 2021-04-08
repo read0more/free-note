@@ -2,27 +2,20 @@ import React from "react";
 import { ItemId, Task } from "../../../common/types";
 import styles from "./TaskItem.module.css";
 
-type Props = Omit<Task, "type"> & {
+type Props = {
+  item: Task;
   toggleCheck: (id: ItemId) => void;
-  id: ItemId;
-  titleStyle: string;
 };
 
-const TaskItem: React.FC<Props> = ({
-  id,
-  title,
-  body,
-  checked,
-  toggleCheck,
-  titleStyle,
-}) => {
+const TaskItem: React.FC<Props> = ({ item, toggleCheck }) => {
+  const { id, body, checked } = item;
+
   const onChange = () => {
     toggleCheck(id);
   };
 
   return (
-    <article>
-      <h2 className={titleStyle}>{title}</h2>
+    <>
       <span>
         <input
           type="checkbox"
@@ -35,7 +28,7 @@ const TaskItem: React.FC<Props> = ({
           {body}
         </label>
       </span>
-    </article>
+    </>
   );
 };
 

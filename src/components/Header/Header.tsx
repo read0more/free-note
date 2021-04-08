@@ -11,39 +11,42 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 type props = {
   title: string;
-  openFormModal: (item: Item) => void;
+  addOrEditItem: (item: Item) => void;
 };
 
-const Header: React.FC<props> = ({ title, openFormModal }) => {
+const DEFAULT_ITEM_TITLE = "제목";
+
+const Header: React.FC<props> = ({ title, addOrEditItem }) => {
   const onClick = (itemType: ItemType) => () => {
     const id = `${Date.now()}`;
+    const title = DEFAULT_ITEM_TITLE;
     switch (itemType) {
       case "image":
-        return openFormModal({
+        return addOrEditItem({
           id,
           type: "image",
-          title: "",
+          title,
           url: "",
         });
       case "video":
-        return openFormModal({
+        return addOrEditItem({
           id,
           type: "video",
-          title: "",
+          title,
           videoId: "",
         });
       case "note":
-        return openFormModal({
+        return addOrEditItem({
           id,
           type: "note",
-          title: "",
+          title,
           body: "",
         });
       case "task":
-        return openFormModal({
+        return addOrEditItem({
           id,
           type: "task",
-          title: "",
+          title,
           body: "",
           checked: false,
         });

@@ -1,15 +1,17 @@
 import React, { useRef } from "react";
 import { Item, ItemId } from "../../common/types";
 import styles from "./Section.module.css";
-import ItemWrapper from "../ItemWrapper/ItemWrapper";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import ItemModal from "../ItemModal/ItemModal";
 
 type Props = {
   items: Item[] | undefined;
   toggleCheck: (id: ItemId) => void;
   deleteItem: (id: string) => void;
   swapItem: (id1: number, id2: number) => void;
-  openFormModal: (item: Item) => void;
+  openModal: (content: JSX.Element) => void;
+  closeModal: () => void;
+  addOrEditItem: (item: Item) => void;
 };
 
 const Section: React.FC<Props> = ({
@@ -17,7 +19,9 @@ const Section: React.FC<Props> = ({
   toggleCheck,
   deleteItem,
   swapItem,
-  openFormModal,
+  openModal,
+  closeModal,
+  addOrEditItem,
 }) => {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -38,16 +42,15 @@ const Section: React.FC<Props> = ({
           {(provided) => (
             <ul {...provided.droppableProps} ref={provided.innerRef}>
               {items &&
-                items.map((item, index) => (
-                  <ItemWrapper
+                items.map((item) => (
+                  <ItemModal
                     key={item.id}
                     item={item}
-                    index={index}
-                    toggleCheck={toggleCheck}
+                    addOrEditItem={addOrEditItem}
                     deleteItem={deleteItem}
-                    swapItem={swapItem}
-                    openFormModal={openFormModal}
-                    sectionRef={sectionRef}
+                    toggleCheck={toggleCheck}
+                    openModal={openModal}
+                    closeModal={closeModal}
                   />
                 ))}
               {provided.placeholder}

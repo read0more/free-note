@@ -1,5 +1,5 @@
 @value noteGreen from '/src/common/colors.css';
 
 .section {
-  margin: 1em;
+  position: relative;
 }

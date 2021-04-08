@@ -1,0 +1,34 @@
+@value noteBlack from '/src/common/colors.css';
+
+.header {
+  font-size: 0.5rem;
+  padding: 0.7em 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: noteBlack;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon-box {
+  position: absolute;
+  right: 1em;
+}
+
+.edit {
+  color: white;
+  cursor: pointer;
+  margin-right: 0.5em;
+}
+
+.delete {
+  cursor: pointer;
+  color: orangered;
+}

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./App.module.css";
-import "./common/item.css";
 import { Item, ItemId } from "./common/types";
 import Header from "./components/Header/Header";
-import AddForm from "./components/ItemForm/ItemForm";
 import Modal from "./components/Modal/Modal";
 import Section from "./components/Section/Section";
 
 type stateType = { items: Record<ItemId, Item>; itemOrder: string[] };
+const DEFAULT_WIDTH_RATIO = 20;
+const DEFAULT_HEIGHT_RATIO = 30;
+const DEFAULT_TOP_RATIO = 0;
+const DEFAULT_LEFT_RATIO = 0;
 
 function App() {
   const [state, setState] = useState<stateType>();
@@ -48,13 +50,21 @@ function App() {
   };
 
   const addOrEditItem = (item: Item) => {
-    const newItems = state
+    const newItems: Record<ItemId, Item> = state
       ? { ...state.items, [item.id]: item }
       : { [item.id]: item };
     const newItemOrder = state ? [...state.itemOrder] : [];
 
+    // 새로 추가하는 경우 처리
     if (!state?.items[item.id]) {
       newItemOrder.push(item.id);
+      newItems[item.id] = {
+        ...newItems[item.id],
+        widthRatio: DEFAULT_WIDTH_RATIO,
+        heightRatio: DEFAULT_HEIGHT_RATIO,
+        topRatio: DEFAULT_TOP_RATIO,
+        leftRatio: DEFAULT_LEFT_RATIO,
+      };
     }
 
     const newState: stateType = { items: newItems, itemOrder: newItemOrder };
@@ -68,16 +78,6 @@ function App() {
 
   const closeModal = () => {
     setModalContent(null);
-  };
-
-  const openFormModal = (item: Item) => {
-    openModal(
-      <AddForm
-        item={item}
-        addOrEditItem={addOrEditItem}
-        closeModal={closeModal}
-      />
-    );
   };
 
   const deleteItem = (id: string) => {
@@ -119,13 +119,15 @@ function App() {
   return (
     <>
       <main className={styles.main}>
-        <Header title={"free note"} openFormModal={openFormModal} />
+        <Header title={"free note"} addOrEditItem={addOrEditItem} />
         <Section
           items={getItems()}
           toggleCheck={toggleCheck}
           deleteItem={deleteItem}
           swapItem={swapItem}
-          openFormModal={openFormModal}
+          openModal={openModal}
+          closeModal={closeModal}
+          addOrEditItem={addOrEditItem}
         />
       </main>
 
